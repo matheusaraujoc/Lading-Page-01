@@ -1,12 +1,8 @@
-// Inicialização do AOS (Animate On Scroll) com configurações Mobile-First
+// Inicialização do AOS
 AOS.init({
-    duration: 700,      // Duração ligeiramente mais rápida
-    easing: 'ease-out', // Transição mais 'solta'
-    once: false,        // Reanima ao rolar para baixo/cima
-    mirror: true,       // Reanima ao rolar de volta para cima
-
-    // O SEGREDO DO MOBILE: 
-    // Offset baixo (50px). Isso significa que assim que o elemento
-    // aparecer 50 pixels na tela (bem no rodapé), a animação dispara.
-    offset: 50,
+    duration: 800,      // Tempo de duração da animação (suave)
+    easing: 'ease-out', // Curva de velocidade
+    once: false,        // Reanima ao rolar para cima/baixo
+    mirror: true,       // Garante animação na volta
+    offset: 20,         // ASSIM QUE ENTRAR NA TELA (20px), JÁ ANIMA. Resolve o atraso.
 });

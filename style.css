@@ -14,7 +14,6 @@ body {
     color: var(--text-light);
     line-height: 1.6;
     overflow-x: hidden;
-    /* Essencial para animações mobile não quebrarem o layout */
     width: 100%;
 }
 
@@ -72,6 +71,7 @@ h4,
     cursor: pointer;
     border: none;
     text-decoration: none;
+    z-index: 10;
 }
 
 .btn-cta:hover {
@@ -94,10 +94,15 @@ h4,
     animation: pulse-green 2s infinite;
 }
 
-/* --- SECTIONS --- */
+/* --- HERO SECTION --- */
 .hero {
+    /* Gradiente cobre tudo e se repete se necessário para evitar barras */
     background: radial-gradient(circle at center, #25282e 0%, #0f1012 100%);
-    min-height: 90vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    /* Altura mínima ajustada para Desktop */
+    min-height: 100vh;
     padding-top: 80px;
     padding-bottom: 80px;
 }
@@ -277,4 +282,35 @@ footer {
 
 .floating-wpp i {
     line-height: 60px;
+}
+
+
+/* =========================================
+   🚨 CORREÇÕES CRÍTICAS PARA MOBILE 🚨
+   ========================================= */
+@media (max-width: 768px) {
+
+    /* 1. Remove qualquer "delay" no celular.
+       Isso faz os elementos aparecerem IMEDIATAMENTE ao rolar,
+       evitando os espaços vazios. */
+    [data-aos-delay] {
+        transition-delay: 0s !important;
+    }
+
+    /* 2. Corrige a "Barra Preta" na Hero Section.
+       Em vez de forçar 100vh (que causa problemas com barras de navegação),
+       deixamos "auto" com padding grande, garantindo que o fundo cubra tudo. */
+    .hero {
+        min-height: auto;
+        padding-top: 120px;
+        /* Mais espaço no topo */
+        padding-bottom: 80px;
+        background-attachment: scroll;
+        /* Evita glitch de fundo fixo em iOS */
+    }
+
+    /* 3. Ajuste de tamanho de fonte para não estourar a tela */
+    .display-4 {
+        font-size: 2.5rem;
+    }
 }
