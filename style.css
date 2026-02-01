@@ -8,13 +8,23 @@
     --text-gray: #b0b3b8;
 }
 
+/* 🚨 SAFETY FIX: Impede rolagem lateral e barra preta */
+html,
+body {
+    max-width: 100vw;
+    /* A tela nunca será maior que a viewport */
+    overflow-x: hidden;
+    /* Corta qualquer elemento teimoso que tente sair */
+    position: relative;
+    margin: 0;
+    padding: 0;
+}
+
 body {
     font-family: 'Roboto', sans-serif;
     background-color: var(--bg-dark);
     color: var(--text-light);
     line-height: 1.6;
-    overflow-x: hidden;
-    width: 100%;
 }
 
 h1,
@@ -24,6 +34,8 @@ h4,
 .display-4,
 .display-5 {
     font-family: 'Montserrat', sans-serif;
+    word-wrap: break-word;
+    /* Quebra palavras longas se necessário */
 }
 
 .lead {
@@ -72,6 +84,12 @@ h4,
     border: none;
     text-decoration: none;
     z-index: 10;
+
+    /* 🚨 SAFETY FIX: Garante que o botão não estoure a tela no mobile */
+    max-width: 100%;
+    white-space: normal;
+    /* Permite que o texto do botão quebre em 2 linhas se precisar */
+    text-align: center;
 }
 
 .btn-cta:hover {
@@ -94,17 +112,15 @@ h4,
     animation: pulse-green 2s infinite;
 }
 
-/* --- HERO SECTION --- */
+/* --- SECTIONS --- */
 .hero {
-    /* Gradiente cobre tudo e se repete se necessário para evitar barras */
     background: radial-gradient(circle at center, #25282e 0%, #0f1012 100%);
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    /* Altura mínima ajustada para Desktop */
     min-height: 100vh;
     padding-top: 80px;
     padding-bottom: 80px;
+    /* Ajuste para evitar cortes */
+    display: flex;
+    align-items: center;
 }
 
 .section-title {
@@ -120,6 +136,8 @@ h4,
     border-radius: 15px;
     border: 1px solid #333;
     transition: transform 0.3s, border-color 0.3s;
+    height: 100%;
+    /* Garante altura igual */
 }
 
 .problem-card i {
@@ -290,27 +308,43 @@ footer {
    ========================================= */
 @media (max-width: 768px) {
 
-    /* 1. Remove qualquer "delay" no celular.
-       Isso faz os elementos aparecerem IMEDIATAMENTE ao rolar,
-       evitando os espaços vazios. */
+    /* Desativa delays para evitar espaços brancos */
     [data-aos-delay] {
         transition-delay: 0s !important;
     }
 
-    /* 2. Corrige a "Barra Preta" na Hero Section.
-       Em vez de forçar 100vh (que causa problemas com barras de navegação),
-       deixamos "auto" com padding grande, garantindo que o fundo cubra tudo. */
+    /* Corrige altura da Hero */
     .hero {
         min-height: auto;
-        padding-top: 120px;
-        /* Mais espaço no topo */
-        padding-bottom: 80px;
-        background-attachment: scroll;
-        /* Evita glitch de fundo fixo em iOS */
+        padding-top: 100px;
+        padding-bottom: 60px;
     }
 
-    /* 3. Ajuste de tamanho de fonte para não estourar a tela */
+    /* 🚨 Reduz o tamanho do Título para não estourar a largura */
     .display-4 {
-        font-size: 2.5rem;
+        font-size: 2rem !important;
+        /* Estava muito grande antes */
+    }
+
+    /* 🚨 Ajusta o Botão para caber na tela */
+    .btn-cta {
+        width: 100%;
+        /* Ocupa 100% da largura disponível */
+        padding: 15px 10px;
+        /* Reduz padding lateral */
+        font-size: 1rem;
+    }
+
+    /* Remove margens negativas do Bootstrap que causam rolagem horizontal */
+    .row {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    .container {
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+        overflow: hidden;
+        /* Garante que nada saia do container */
     }
 }
